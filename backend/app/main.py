@@ -12,7 +12,7 @@ from textblob import TextBlob
 import re
 import random
 
-# Load environment variables (e.g., OpenAI API key)
+# Load environment variables 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -30,7 +30,7 @@ app.add_middleware(
 processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
 model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
-# ✨ Rewrites a raw caption to 3 expressive ones using GPT
+# Rewrites a raw caption to 3 expressive ones using GPT
 def rewrite_caption_with_gpt(raw_caption: str) -> list:
     try:
         prompt = (
@@ -52,7 +52,7 @@ def rewrite_caption_with_gpt(raw_caption: str) -> list:
         return captions[:3] if captions else [raw_caption]
 
     except Exception as e:
-        print("🔴 GPT Caption Error:", e)
+        print("GPT Caption Error:", e)
         return [raw_caption]  # fallback list
 
 # 🎨 Generate expressive captions using predefined templates
@@ -69,7 +69,7 @@ def generate_expressive_captions(raw_caption: str) -> list:
     ]
     return random.sample(templates, 3)  # Return 3 random captions
 
-# 🛠️ Adjust the tone of the captions
+# Adjust the tone of the captions
 def adjust_tone(caption: str) -> str:
     # Example of tone adjustment using TextBlob for sentiment analysis
     blob = TextBlob(caption)
@@ -79,7 +79,7 @@ def adjust_tone(caption: str) -> str:
         return f"🌞 {caption} (Bright and uplifting!)"
     return caption  # Neutral tone
 
-# 🚀 Main API endpoint
+# Main API endpoint
 @app.post("/generate-caption/")
 async def generate_caption(file: UploadFile = File(...)):
     try:
@@ -103,5 +103,5 @@ async def generate_caption(file: UploadFile = File(...)):
         return JSONResponse(content={"captions": adjusted_captions})
 
     except Exception as e:
-        print("🔴 Error in caption generation:", e)
+        print("Error in caption generation:", e)
         return JSONResponse(content={"error": str(e)}, status_code=500)
