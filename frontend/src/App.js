@@ -65,14 +65,14 @@ function App() {
 
       {captions.length > 0 && (
         <div className="caption-box">
-          <h2>Choose Your Vibe ✨</h2>
+          <h2>Choose Your Vibe </h2>
           {captions.map((cap, index) => (
             <div key={index} className="caption-option">
               <p>{cap}</p>
               <button onClick={() => handleCopy(cap, index)}>
-                {copiedIndex === index ? '✅ Copied!' : '📋 Copy'}
+                {copiedIndex === index ? 'Copied!' : 'Copy'}
               </button>
-              <button onClick={() => handleTweakCaption(index)}>✏️ Tweak</button>
+              <button onClick={() => handleTweakCaption(index)}>Tweak</button>
             </div>
           ))}
         </div>
